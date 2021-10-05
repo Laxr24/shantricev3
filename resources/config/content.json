@@ -1,0 +1,24 @@
+{
+    "config": {
+        "site_name": "Shantrice",
+        "title": "Shantrice",
+        "tag": "Expressing own universe",
+        "allow_index": true
+    },
+    "home": {
+        "intro_1": "lorem ipsum dolor sit amet."
+    },
+    "p_1": {
+        "name": "Post",
+        "handler": "p_1",
+        "content": "<h1 class='text-3xl'>Hello<\/p>"
+    },
+    "dum_id": {
+        "name": "Dumy Contnt name",
+        "handler": "dum_id",
+        "thumb": "\/adf.jpg",
+        "content": "dummy",
+        "type": "text",
+        "customText": "Hello custom text"
+    }
+}

@@ -1,0 +1,1 @@
+<p class="text-white">{{ $data->config['title'] }}</p>

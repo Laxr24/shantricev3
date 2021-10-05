@@ -1,0 +1,11 @@
+{
+    "mistic": {
+        "name": "Mystic in the water",
+        "handler": "mistic",
+        "thumb": "\/public\/asset.jpg",
+        "content": "Hello world is there anythign I can do for you?",
+        "type": "textarea",
+        "love": "asas",
+        "love_xonr": "COnnooonto"
+    }
+}
