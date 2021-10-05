@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title ?? ''}}</title>
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+
+    {{-- Alpine JS --}}
+    <script src="{{ mix('js/app.js')}}" defer></script>
+
 </head>
 <body class="bg-gray-900">
 
@@ -14,20 +18,10 @@
 
     {{-- Main Body content --}}
     @yield('template_content')
-
-
     {{-- Include Footer content  --}}
     @include('client.views.layouts.sections.footer')
 
 
 
-
-    <script src="//unpkg.com/alpinejs" ></script>
-
-    <script>
-        Alpine.store('showMenu', {
-            isShowing: false 
-        })
-    </script>
 </body>
 </html>
