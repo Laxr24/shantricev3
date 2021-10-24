@@ -20,5 +20,13 @@
         "content": "dummy",
         "type": "text",
         "customText": "Hello custom text"
+    }, 
+    "jljlk": {
+        "name": "Dumy Contnt name",
+        "handler": "dum_id",
+        "thumb": "\/adf.jpg",
+        "content": "dummy",
+        "type": "text",
+        "customText": "Hello custom text"
     }
 }

@@ -1,7 +1,7 @@
 {{-- Extent to the layout  --}}
 @extends('client.views.layouts.base')
 @section('template_content')
-   <div class="w-full bg-cover bg-center bg-no repeat h-96" style="background-image:url('{{ asset('media/client/earth.jpg')}}')"></div>
+   <div class="w-full bg-cover bg-center bg-no repeat h-96" style="background-image:url('{{ asset('public/media/client/earth.jpg')}}')"></div>
 
 
 
@@ -13,7 +13,7 @@
 
    <div class="container mx-auto my-8 grid grid-cols-1 md:grid-cols-2 gap-2 p-2 shadow  rounded ">
         <div class="p-2">
-            <img  src="{{asset('media/client/roverHead.jpg')}}" alt="">
+            <img  src="{{asset('public/media/client/roverHead.jpg')}}" alt="">
         </div> 
 
         <div class="txt p-2 flex items-center">
@@ -33,7 +33,7 @@ Time goes and we gather experience. Increase skills and share them for the good 
 
    <div class="container mx-auto my-8 grid grid-cols-1 md:grid-cols-2 gap-2 p-2 shadow  rounded ">
     <div class="p-2">
-        <img  src="{{asset('media/client/satelite.jpg')}}" alt="">
+        <img  src="{{asset('public/media/client/satelite.jpg')}}" alt="">
     </div> 
 
     <div class="txt p-2 flex items-center">
@@ -54,7 +54,7 @@ Where people are busy making noises willingly or unconcerned.
 
 <div class="container mx-auto my-8 grid grid-cols-1 md:grid-cols-2 gap-2 p-2 shadow  rounded ">
     <div class="p-2">
-        <img  src="{{asset('media/client/earth horizon.jpg')}}" alt="">
+        <img  src="{{asset('public/media/client/earth horizon.jpg')}}" alt="">
     </div> 
 
     <div class="txt p-2 flex items-center">
@@ -73,7 +73,7 @@ Where people are busy making noises willingly or unconcerned.
 
 <div class="container mx-auto my-8 grid grid-cols-1 md:grid-cols-2 gap-2 p-2 shadow  rounded ">
     <div class="p-2">
-        <img  src="{{asset('media/client/astronaut.jpg')}}" alt="">
+        <img  src="{{asset('public/media/client/astronaut.jpg')}}" alt="">
     </div> 
 
     <div class="txt p-2 flex items-center">
@@ -93,7 +93,7 @@ Where people are busy making noises willingly or unconcerned.
 
 <div class="container mx-auto my-8 grid grid-cols-1 md:grid-cols-2 gap-2 p-2 shadow  rounded ">
     <div class="p-2">
-        <img  src="{{asset('media/client/shaan.jpg')}}" alt="">
+        <img  src="{{asset('public/media/client/shaan.jpg')}}" alt="">
     </div> 
 
     <div class="txt p-2 flex items-center">

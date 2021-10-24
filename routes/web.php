@@ -47,7 +47,9 @@ Route::get('/{page}', function($page){
 }); 
 
 
-
+Route::get('/de', function(){
+ return view('default'); 
+}); 
 
 // Fallback Route 
 Route::fallback(function () {
