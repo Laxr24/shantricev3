@@ -53,3 +53,21 @@ Route::post('/blog', function(Request $request){
     return response()->json(['status'=>200]); 
 
 })->name("api.blog"); 
+
+
+
+
+Route::get('/content', function(){
+    $path = base_path()."/resources/config"; 
+    $content = new Content($path, "blog"); 
+
+    $data = [
+        "name"=>"shaan", 
+        "age"=>300, 
+        "profession"=>"student"
+    ]; 
+
+    // $content->update("profile", $data); 
+    // $content->remove('mistic'); 
+    return $content->get("profile"); 
+}); 

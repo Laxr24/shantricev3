@@ -34,7 +34,7 @@ class Content{
 
 
     /**
-     * Absolute filePath on server
+     * Absolute folders on server
      */
     public $filePath;
 
@@ -94,16 +94,37 @@ class Content{
         /**
          * Get All Contents by this method.
          * Get all contents back as JSON response
+         * $key = $key you want to get from the file
          */
         
-        public function get(){
+        public function get(string $key = null  ){
+            // If key is not provided then return all data
+         if($key == null){
             if(!file_exists($this->file)){
-            return response()->json(["error"=>"Target file was not found"]);
-        }
-        $readFile = file_get_contents($this->file); 
-        // Decode 
-        $de = json_decode($readFile, true); 
-        return (object)$de; 
+                return response()->json(["error"=>"Target file was not found"]);
+            }
+            $readFile = file_get_contents($this->file); 
+            // Decode 
+            $de = json_decode($readFile, true); 
+            return (object)$de; 
+         }
+            // If key is provided return the specific value
+
+            if(!file_exists($this->file)){
+                return response()->json(["error"=>"Target file was not found"]);
+            }
+            $data = file_get_contents($this->file); 
+            $decodedData = json_decode($data, true); 
+
+            $decodedData[$key]["key"] = $key; 
+
+        
+            return  response()->json(["status"=>200, "data"=>$decodedData[$key]]) ; 
+           
+
+
+
+
     }
     
     
@@ -156,7 +177,7 @@ class Content{
     }
 
     /**
-     * Remove class removes entry of the model 
+     * Remove method removes entry of the model 
      * or The data model file itself 
      */
 
