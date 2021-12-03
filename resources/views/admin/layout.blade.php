@@ -14,7 +14,7 @@
 
     <script src="//unpkg.com/alpinejs" defer></script>
 
-    <link rel="stylesheet" href="{{ asset('/css/admin/app.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/admin/app.css')}}">
 
 </head>
 <body class="bg-gray-900">
@@ -22,6 +22,6 @@
     @yield('template_content')
 
 
-    <script src="{{ asset('js/admin/app.js')}}"></script>
+    <script src="{{ asset('public/js/admin/app.js')}}"></script>
 </body>
 </html>
