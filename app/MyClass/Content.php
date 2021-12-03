@@ -30,11 +30,8 @@ class Content{
     }
 
 
-
-
-
     /**
-     * Absolute folders on server
+     * Model folder location on server
      */
     public $filePath;
 
@@ -54,11 +51,6 @@ class Content{
      * User defined PHP object to update the model data
      */
     public $modelContent; 
-
-
-
-
-
 
 
     /**
@@ -151,8 +143,6 @@ class Content{
         return response()->json(["success"=>"File updated successfully"]);
     }
 
-
-
     /**
      * '$name' is the handler name
      * '$value' is the model object that you want to store
@@ -186,7 +176,7 @@ class Content{
      * '$deleteFile' is the boolean value to delete the model file itself
      */
 
-     public function remove(string $data, Bool $deleteFile = false ?? null  ){
+    public function remove(string $data, Bool $deleteFile = false ?? null  ){
 
         if($deleteFile == true){
             unlink($this->file); 
@@ -213,33 +203,61 @@ class Content{
       * as is in the file.
       * Just pass the file location that you want to read
       */
-      public function FileRead(string $path){
-            // Locate the file and open for editing with size
-            $file = fopen($path, "r"); 
-            $size = filesize($path);
-            // And empty array to store each line of file as array 
-            $content =[] ; 
+    public function FileRead(string $path){   
+        // Locate the file and open for editing with size
+        $file = fopen($path, "r"); 
+        $size = filesize($path);
+        // And empty array to store each line of file as array 
+        $content =[] ; 
 
-            // Continously reading each fiel and putting it into an array 
-            for($i=1; $i <= $size; $i++){
-                $con = fgetc($file); 
-                array_push($content ,$con); 
-            }
-            fclose($file); 
+        // Continously reading each fiel and putting it into an array 
+        for($i=1; $i <= $size; $i++){
+            $con = fgetc($file); 
+            array_push($content ,$con); 
+        }
+        fclose($file); 
 
-            // Taking all the value from the contest as input and concatinating as a 
+        // Taking all the value from the contest as input and concatinating as a 
 
-            // Sentence in this new string variable called $value 
-            $value ="";
+        // Sentence in this new string variable called $value 
+        $value ="";
 
-            //Putting contents in value as a single string
-            foreach($content as $k=>$v){
-                // echo $v; 
-                $value .= $v; 
-            }
-
-            return $value; 
+        //Putting contents in value as a single string
+        foreach($content as $k=>$v){
+            // echo $v; 
+            $value .= $v; 
         }
 
-    
-}
+        return $value; 
+    }
+
+    /*
+    *Folder location of the configuration and 
+    *model files. 
+    *It'll spit up all the model name with their corresponding
+    *data in a nested json object. 
+    */
+    public function data($folderLocation = null ){
+        if(is_dir($folderLocation)){
+            $scanDir = scandir($folderLocation); 
+
+            $ls = []; 
+
+            foreach($scanDir as $key=>$value){
+                if($value != "." && $value != ".."){
+                    $ls[]=$value;  
+                }
+                
+            }
+            return print_r($ls);  
+
+            
+        } 
+        else{
+            return response()->json(['status'=>'400','error'=>'no available directory']); 
+        }
+    }
+
+
+
+    }
