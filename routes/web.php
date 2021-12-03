@@ -74,8 +74,7 @@ Route::get('/test/{param}/{mode}', function($param =null, $mode = null){
     $content = new Content($filePath, 'products', $modelContent ); 
     // return response()->json(['data'=>$content->get()]); 
 
-
-    return $content->data($filePath); 
+    return response()->json(['data'=>$content->data($filePath)]); 
 
 
 

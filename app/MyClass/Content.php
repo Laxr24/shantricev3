@@ -235,7 +235,7 @@ class Content{
     *Folder location of the configuration and 
     *model files. 
     *It'll spit up all the model name with their corresponding
-    *data in a nested json object. 
+    *data in a nested PHP object. 
     */
     public function data($folderLocation = null ){
         if(is_dir($folderLocation)){
@@ -249,7 +249,7 @@ class Content{
                 }
                 
             }
-            return print_r($ls);  
+            return $ls;   
 
             
         } 
