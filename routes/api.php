@@ -55,19 +55,8 @@ Route::post('/blog', function(Request $request){
 })->name("api.blog"); 
 
 
-
-
-Route::get('/content', function(){
-    $path = base_path()."/resources/config"; 
-    $content = new Content($path, "blog"); 
-
-    $data = [
-        "name"=>"shaan", 
-        "age"=>300, 
-        "profession"=>"student"
-    ]; 
-
-    // $content->update("profile", $data); 
-    // $content->remove('mistic'); 
-    return $content->get("profile"); 
+Route::get('/content/{fileName}', function($fileName){
+    $content = new Content(); 
+    $data = $content->FileRead(base_path()."/resources/config/".$fileName.".json"); 
+    return response()->json(['status'=>200, 'data'=>$data]);
 }); 

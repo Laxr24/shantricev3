@@ -237,7 +237,7 @@ class Content{
     *It'll spit up all the model name with their corresponding
     *data in a nested PHP object. 
     */
-    public function data($folderLocation = null ){
+    public function data( $folderLocation = null ){
         if(is_dir($folderLocation)){
             $scanDir = scandir($folderLocation); 
 
@@ -249,6 +249,7 @@ class Content{
                 }
                 
             }
+
             return $ls;   
 
             
