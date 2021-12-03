@@ -64,7 +64,7 @@ class Content{
     /**
      * Make A new Model File 
      * Insert Data or Leave blank
-     * Make sure to use nullable property values
+     * Make sure to use constructor parameter 
      */
     public function make(){
         if(file_exists($this->filePath)){
@@ -94,7 +94,8 @@ class Content{
         /**
          * Get All Contents by this method.
          * Get all contents back as JSON response
-         * $key = $key you want to get from the file
+         * '$key' is the handler name of the model file you want to get from the file
+         * To fetch all models and data just leave the parameter blank of the method
          */
         
         public function get(string $key = null  ){
@@ -153,6 +154,8 @@ class Content{
 
 
     /**
+     * '$name' is the handler name
+     * '$value' is the model object that you want to store
      * Add Item to the Model
      * Increate the data entity in your model
      * Maybe add some more fields with Key=>value pair PHP array 
@@ -179,6 +182,8 @@ class Content{
     /**
      * Remove method removes entry of the model 
      * or The data model file itself 
+     * '$data' is the name of the handler name
+     * '$deleteFile' is the boolean value to delete the model file itself
      */
 
      public function remove(string $data, Bool $deleteFile = false ?? null  ){
@@ -209,7 +214,7 @@ class Content{
       * Just pass the file location that you want to read
       */
       public function FileRead(string $path){
-            // Locate the file and open for erading with size
+            // Locate the file and open for editing with size
             $file = fopen($path, "r"); 
             $size = filesize($path);
             // And empty array to store each line of file as array 

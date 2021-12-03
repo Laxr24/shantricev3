@@ -51,6 +51,37 @@ Route::get('/de', function(){
  return view('default'); 
 }); 
 
+
+
+// Test CRUD route 
+Route::get('/test/{param}/{mode}', function($param =null, $mode = null){
+    /* To read a File 
+    $filePath = base_path()."/resources/config/content.json"; 
+    $content = new Content(); 
+    return "<pre>".$content->FileRead($filePath)."</pre>"; 
+    */
+
+    // To make a file 
+    $filePath = base_path()."/resources/config/"; 
+
+    $modelContent = [
+            "price"=>100, 
+            "brand"=>"Teer"
+             ]
+    ; 
+
+
+    $content = new Content($filePath, 'products', $modelContent ); 
+    return response()->json(['data'=>$content->get()]); 
+
+
+
+}); 
+
+
+
+
+
 // Fallback Route 
 Route::fallback(function () {
     return view('client.error.404') ; 

@@ -11,7 +11,7 @@
     "p_1": {
         "name": "Post",
         "handler": "p_1",
-        "content": "<h1 class='text-3xl'>Hello<\/p>"
+        "content": "<h1 class='text-3xl'>Hello</h1>"
     },
     "dum_id": {
         "name": "Dumy Contnt name",
