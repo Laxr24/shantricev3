@@ -17,15 +17,11 @@ Route::get('/', function(){
 
 // Test CRUD route 
 Route::get('test/', function(){
-
     $path = base_path()."/resources/config/";  
-
     $content = new Content(); 
     $files = $content->data($path);
-
     $data = $content->FileRead(base_path()."/resources/config/content.json"); 
-
-     return view('test.index')->with(['files'=>$files, 'data'=>$data]); 
+    return view('test.index')->with(['files'=>$files, 'data'=>$data]); 
 }); 
 
 
