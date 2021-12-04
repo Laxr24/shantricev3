@@ -45,9 +45,9 @@
      
         
     
-        function update(e){
+       async function update(e){
 
-            content.innerHTML = ""
+            
             content.value = ""
             var filename = e.innerHTML.replace('.json', ''); 
             
