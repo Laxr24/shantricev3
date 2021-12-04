@@ -18,7 +18,7 @@
 <body class="bg-gray-900 p-3" >
     
     
-    <p class="text-white font-mono text-center md:textleft">Here are he file lists:</p>
+    <p class="text-white font-mono text-center md:text-left">Here are he file lists:</p>
 
   
     <ul>
