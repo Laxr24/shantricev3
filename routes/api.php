@@ -55,8 +55,18 @@ Route::post('/blog', function(Request $request){
 })->name("api.blog"); 
 
 
+// To fetch the .json file contents
 Route::get('/content/{fileName}', function($fileName){
     $content = new Content(); 
     $data = $content->FileRead(base_path()."/resources/config/".$fileName.".json"); 
     return response()->json(['status'=>200, 'data'=>$data]);
+}); 
+
+// To update the .json file contents
+Route::post('/content/{fileName}', function(Request $request, $fileName){
+    
+    // return response()->json(['status'=>200, 'data'=>$request]);
+    $content = new Content(); 
+    $data = $content->rewrite(base_path()."/resources/config/".$fileName.".json", $request->data); 
+    return response()->json(['status'=>200, 'content'=>$request->data]);
 }); 

@@ -25,14 +25,17 @@
         @foreach ($files as $key=>$value)
             <li>
                 <span class="mr-3 text-red-400">{{$key}}.</span> 
-                <a class="text-white inline-block ml-4 hover:text-pink-400 transition"  href="#" onclick="update(this)">{{$value}}</a>
+                <a class="text-white inline-block ml-4 hover:text-pink-400 transition"  href="#" onclick="fetchFile(this)">{{$value}}</a> 
+                <a href="#" class="text-red-500 transition hover:text-gray-300 uppercase ml-2">delete</a>
             </li>    
         @endforeach
     </ul>
 
     <div class="container  mx-auto pt-4">
         <p class="font-mono uppercase text-pink-300 text-center p-2">Showing content of: <span class="text-green-200" id="showFileName"></span></p>
-        <textarea id="fileContent" class="p-2 w-full font-mono tracking-wider border-none outline-none rounded-md text-white bg-gray-700"  rows="20"></textarea>
+        <textarea id="fileContent" class="p-2 w-full  font-mono tracking-wider border-none outline-none rounded-md text-white bg-gray-700" rows="20"></textarea>
+
+        <button class="rounded-md bg-gradient-to-br from-green-400 to-green-300 px-4 py-2 m-2" onclick="updateContent()">Update</button>
     </div>
 
 
@@ -40,22 +43,31 @@
     <script>
 
        var content = document.getElementById("fileContent")
+       content.value = ""
        var showFileName = document.getElementById("showFileName")
-     
+       var filename = ""
      
         
     
-       async function update(e){
-
-            
+        function fetchFile(e){
             content.value = ""
-            var filename = e.innerHTML.replace('.json', ''); 
-            
+            filename = e.innerHTML.replace('.json', ''); 
             axios.get(window.location.origin+'/api/content/'+filename).then(res=>{
             content.value = res.data.data
             showFileName.innerText = filename
             })
 
+        }
+
+         function updateContent(){
+            var updatedData = content.value 
+            axios.post(window.location.origin+'/api/content/'+filename, {data: updatedData}).then(res=>{
+                if(res.data.status == 200){
+                    content.value = res.data.content
+                    alert('Content updated successfully!')
+                }
+                console.log(res.data.content); 
+            })
         }
         
     </script>

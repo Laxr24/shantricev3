@@ -260,5 +260,22 @@ class Content{
     }
 
 
+    /**
+     * 'rewrite()' method will update
+     * the whole file with new data 
+     * given in the method parameter
+     */
+    public function rewrite($filePath = null , $data = null){
+        if(!file_exists($filePath)){
+            return response()->json(["status"=>400,"error"=>"Target file was not found"]);
+        }
+
+        $file = fopen($filePath, "w+"); 
+        fwrite($file, $data); 
+        fclose($file); 
+        return response()->json(["status"=>200,"success"=>"File updated successfully"]);
+    }
+
+
 
     }
