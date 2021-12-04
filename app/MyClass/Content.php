@@ -59,7 +59,10 @@ class Content{
      * Make sure to use constructor parameter 
      */
     public function make(){
+        // if path available
         if(file_exists($this->filePath)){
+
+            // if file exitsts
             if(file_exists($this->file)){
                 return response()->json(["error"=>"Target file already exists. Try updating instead"]);
             }
@@ -268,7 +271,6 @@ class Content{
         if(!file_exists($filePath)){
             return response()->json(["status"=>400,"error"=>"Target file was not found"]);
         }
-
         $file = fopen($filePath, "w+"); 
         fwrite($file, $data); 
         fclose($file); 
@@ -322,6 +324,20 @@ class Content{
         else{
             return response()->json(['status'=>'400','error'=>'The directory is no more available']); 
         }
+    }
+
+
+    /**
+     * Makes model file with any raw data
+     */
+    public function makeModel($configFolder = null ,$name = null , $rawData = null ){
+
+        $filePath = $configFolder.$name.".json"; 
+        $file = fopen($filePath, "c+"); 
+        fwrite($file, $rawData); 
+        fclose($file);
+        return response()->json(['status'=>200, 'message'=>'Model file was created successfully']);
+ 
     }
 
 

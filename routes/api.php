@@ -55,12 +55,45 @@ Route::post('/blog', function(Request $request){
 })->name("api.blog"); 
 
 
+
+
+
+
+//  To create model files with or without content
+Route::post('/model', function(Request $request){
+
+    if($request->modelName != null){
+        $path = base_path()."/resources/config/";
+        $data = $request->modelContent;  
+        $content = new Content();
+        if($request->modelName != null ){
+            $content->makeModel($path, $request->modelName, $data); 
+        }
+        return redirect()->back();
+    }
+    else{
+        return redirect()->back(); 
+    }
+    
+})->name("api.add.model"); 
+
+
+
+
+
+
 // To fetch the .json file contents
 Route::get('/content/{fileName}', function($fileName){
     $content = new Content(); 
     $data = $content->FileRead(base_path()."/resources/config/".$fileName.".json"); 
     return response()->json(['status'=>200, 'data'=>$data]);
 }); 
+
+
+
+
+
+
 
 // To update the .json file contents
 Route::post('/content/{fileName}', function(Request $request, $fileName){

@@ -13,6 +13,13 @@ Route::get('/', function(){
 
 
 
+Route::get('/add-content', function(){
+    $path = base_path()."/resources/config/"; 
+    $content = new Content($path, "content"); 
+    $files = $content->configFiles($path);
+    return view('admin.home')->with(['data'=>$content->get() ?? "", 'files'=>$files, 'models'=>$content->models($path)]); 
+}); 
+
 
 
 // Test CRUD route 

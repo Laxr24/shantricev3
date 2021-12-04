@@ -19,11 +19,12 @@
 }
 </script>
 
-<div class="bg-gray-700 p-6"  x-data="{ content: false, blog: false, addFieldType: '', fieldName: ''}">
+<div class="bg-gray-700 p-6"  x-data="{ content: false, blog: false,model:false, addFieldType: '', fieldName: ''}">
 
 {{--  Content creation mode selector  --}}
-<button class="px-3 py-1 m-2 rounded bg-purple-700 text-white font-bold uppercase " @click="content= !content; blog = false">Content</button>
-<button class="px-3 py-1 m-2 rounded bg-pink-800 text-white font-bold uppercase" @click="blog= !blog; content= false ">Blog</button>
+{{-- <button class="px-3 py-1 m-2 rounded bg-purple-700 text-white font-bold uppercase " @click="content= !content; blog = false">Content</button> --}}
+{{-- <button class="px-3 py-1 m-2 rounded bg-pink-800 text-white font-bold uppercase" @click="blog= !blog; content= false ">Blog</button> --}}
+<button class="px-3 py-1 m-2 rounded bg-green-700 text-white font-bold uppercase" @click="model= !model; content= false ">Model</button>
 
 
 {{-- Content Form Group --}}
@@ -89,6 +90,22 @@
 
     </form>
 </div>
+
+{{-- Model Form Group --}}
+<div class="mx-auto   p-3" x-show="model" >
+    <form action="{{ route("api.add.model")}}" method="post" x-ref="blogContainer" >
+        @csrf
+        <input  class=" md:w-6/12 w-full my-2 px-2 py-1 font-mono rounded outline-none border-none"type="text" name="modelName" id="" placeholder="ex. posts, blogs">
+        <br>
+        <textarea class="my-2 md:w-6/12 w-full px-2 py-1 font-monorounded outline-none border-none" name="modelContent" id=""  rows="10" placeholder="JSON content is recommended. ex. {'name':'jhon'}"></textarea>
+        <br>
+        <button class="py-2 text-center uppercase text-white font-bold px-4 rounded bg-green-600">Add model</button>
+
+    </form>
+</div>
+
+
+
 
 
 </div>
