@@ -78,6 +78,13 @@ Route::post('/model', function(Request $request){
 })->name("api.add.model"); 
 
 
+Route::post('/model/delete/', function(Request $request){
+ 
+    $path = base_path()."/resources/config/";
+    unlink($path.'/'.$request->file.'.json'); 
+    return response()->json(['status'=>200, 'message'=>"successfully deleted"]);
+
+}); 
 
 
 

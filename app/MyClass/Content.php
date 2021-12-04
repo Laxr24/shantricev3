@@ -175,13 +175,15 @@ class Content{
     /**
      * Remove method removes entry of the model 
      * or The data model file itself 
-     * '$data' is the name of the handler name
+     * '$data' is the name of the handler
      * '$deleteFile' is the boolean value to delete the model file itself
+     * '$fileLocation' is the file location to delete
      */
 
-    public function remove(string $data, Bool $deleteFile = false ?? null  ){
+    public function remove(string $data, Bool $deleteFile = false ?? null){
 
         if($deleteFile == true){
+            
             unlink($this->file); 
             return response()->json(["success"=>"Model file deleted successfully"]);
         }

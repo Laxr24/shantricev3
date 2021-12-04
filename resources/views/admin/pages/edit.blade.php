@@ -8,7 +8,7 @@
                     <li class="my-2">
                         <span class="mr-3 text-red-400">{{$key+1}}.</span> 
                         <a class="text-white inline-block ml-4 hover:text-pink-400 transition"  href="#" onclick="fetchFile(this)">{{$value}}</a> 
-                        <a href="#" class="text-red-500 transition hover:text-gray-300 uppercase ml-2">delete</a>
+                        <a href="#" id="{{str_replace('.json', '', $value)}}" onclick="event.preventDefault(); deleteFile(this)" class="text-red-500 transition hover:text-gray-300 uppercase ml-2">delete</a>
                     </li>    
                 @endforeach
             </ul>
@@ -66,6 +66,18 @@
             else{
                 alert('No file selected to reset! ⛔ \nSelect a file and try ♻️')
             }
+        }
+
+
+
+        function deleteFile( dom){
+            console.log(dom)
+            axios.post(window.location.origin+'/api/model/delete', {'file': dom.id }).then(res=>{
+                alert("File deleted!"); 
+                window.location.reload()
+            })
+
+
         }
         
     </script>
