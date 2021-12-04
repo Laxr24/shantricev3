@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Test view</title>
 
-
+    <link rel="shortcut icon" href="{{asset('public/favicon.ico')}}" type="image/x-icon">
     
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <script src="//unpkg.com/alpinejs" defer></script>
@@ -46,10 +46,13 @@
         
     
         function update(e){
+
+            content.innerHTML = ""
+            content.value = ""
             var filename = e.innerHTML.replace('.json', ''); 
             
             axios.get(window.location.origin+'/api/content/'+filename).then(res=>{
-            content.innerHTML = res.data.data
+            content.value = res.data.data
             showFileName.innerText = filename
             })
 
