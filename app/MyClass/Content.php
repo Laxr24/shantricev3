@@ -234,10 +234,9 @@ class Content{
     /*
     *Folder location of the configuration and 
     *model files. 
-    *It'll spit up all the model name with their corresponding
-    *data in a nested PHP object. 
+    *It'll spit up all the model name 
     */
-    public function data( $folderLocation = null ){
+    public function configFiles( $folderLocation = null ){
         if(is_dir($folderLocation)){
             $scanDir = scandir($folderLocation); 
 
@@ -275,6 +274,58 @@ class Content{
         fclose($file); 
         return response()->json(["status"=>200,"success"=>"File updated successfully"]);
     }
+
+    /**
+     * variables($folderlocation)
+     * 'variables' method takes the config. folder
+     * location as argument and returns all the contents 
+     * of the corresponding files as a PHP object. 
+     */
+    public function models($configFolder){
+        if(is_dir($configFolder)){
+            $scanDir = scandir($configFolder); 
+
+            $ls = []; 
+            $data = []; 
+
+            // Listing all the filenames in $ls array
+            foreach($scanDir as $key=>$value){
+                if($value != "." && $value != ".."){
+                    $ls[]=$value;  
+                }
+                
+            }
+
+            // pushing all contents of corresponding file to new object
+            foreach($ls as $value){  
+                $file = $configFolder.$value;  
+
+                // return $file; 
+                if(!file_exists($file)){
+                    return response()->json(["error"=>"Target file was not found"]);
+                }
+                $readFile = file_get_contents($file); 
+                // Decode 
+                $de = json_decode($readFile, true); 
+                 
+                // make object 
+                $data[] = [
+                    'model' => str_replace('.json', '', $value), 
+                    'data' =>(object)$de
+                ]; 
+            }
+
+            return $data;   
+
+            
+        } 
+        else{
+            return response()->json(['status'=>'400','error'=>'The directory is no more available']); 
+        }
+    }
+
+
+
 
 
 

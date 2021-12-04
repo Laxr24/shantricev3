@@ -19,9 +19,16 @@ Route::get('/', function(){
 Route::get('test/', function(){
     $path = base_path()."/resources/config/";  
     $content = new Content(); 
-    $files = $content->data($path);
-    $data = $content->FileRead(base_path()."/resources/config/content.json"); 
-    return view('test.index')->with(['files'=>$files, 'data'=>$data]); 
+    $files = $content->configFiles($path);
+    return view('test.index')->with(['files'=>$files]); 
+}); 
+
+// Test all variables 
+
+Route::get('/models', function(){
+    $content = new Content(); 
+    $path = base_path()."/resources/config/"; 
+    return $content->models($path); 
 }); 
 
 

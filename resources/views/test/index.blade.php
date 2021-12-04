@@ -25,7 +25,7 @@
             <ul>
                 @foreach ($files as $key=>$value)
                     <li class="my-2">
-                        <span class="mr-3 text-red-400">{{$key}}.</span> 
+                        <span class="mr-3 text-red-400">{{$key+1}}.</span> 
                         <a class="text-white inline-block ml-4 hover:text-pink-400 transition"  href="#" onclick="fetchFile(this)">{{$value}}</a> 
                         <a href="#" class="text-red-500 transition hover:text-gray-300 uppercase ml-2">delete</a>
                     </li>    
