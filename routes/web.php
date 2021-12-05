@@ -30,6 +30,12 @@ Route::get('test/', function(){
     return view('test.index')->with(['files'=>$files]); 
 }); 
 
+
+// Test Content Editor editorjs 
+Route::get("/edit-content", function(){
+    return view("test.contentEditor"); 
+} ); 
+
 // Test all variables 
 
 Route::get('/models', function(){
