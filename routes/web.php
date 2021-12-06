@@ -63,8 +63,8 @@ Route::get("/dir/{name}/{type}", function($name = null, $type=null){
  
 // return $path; 
    $content = new Content(); 
-   $files = $content->scanDir(__DIR__); 
-   return $files;  
+   $files = $content->scanDir(base_path()."/".$name); 
+   return $files; 
    return view("test.folder")->with("files", $files);
 
 })->name("content.view"); 

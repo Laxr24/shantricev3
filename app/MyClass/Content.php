@@ -351,20 +351,23 @@ class Content{
      */
     public function scanDir($path){
         $fileOrFolder = []; 
-
         // Scans the base directory and puts all files,folder and subfolders in nested PHP object $fileOrFolder
         foreach(scandir($path) as $value){
             $fileOrFolderPath = pathinfo($path."/".$value, PATHINFO_DIRNAME);
+            $fileOrFolderBaseName = pathinfo($fileOrFolderPath, PATHINFO_BASENAME);
 
-            if(directoryExists($fileOrFolderPath) && is_dir($path."/".$value)){
-                $hasSubFolder = []; 
-                //checks if has sub folders or file
-              
+            if(directoryExists($fileOrFolderPath) && is_dir($path."/".$value)){   
+                $sub= false; 
+                if(count(scandir($path."/".$value))>2){
+                    $sub = true ; 
+                } 
                 $fileOrFolder[]=[
                     "type"=>"folder", 
                     "name"=>$value, 
                     "extension"=>"folder", 
-                    "path"=> $fileOrFolderPath."/".$value
+                    "path"=> $fileOrFolderPath."/".$value,
+                    "baseName"=> $fileOrFolderBaseName,
+                    "subfolder"=>$sub
                 ]; 
             }
             elseif(file_exists($fileOrFolderPath."/".$value) || is_file($fileOrFolderPath."/".$value)){
@@ -377,7 +380,6 @@ class Content{
                 ]; 
             } 
 
-            
         }
         return $fileOrFolder; 
     }
