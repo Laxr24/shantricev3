@@ -81,29 +81,29 @@ Route::get("/dir", function(){
 Route::get("/dir/{name}/{type}", function($name = null, $type=null){
 
     if($type == "folder"){
-        $scandir = scandir(base_path()."/".$name) ; 
+        $path = base_path()."/".$name; 
+        $scandir = scandir($path) ; 
+         
         $files = []; 
-            foreach ($scandir as $folder) {
-                if(is_dir($folder)){
-                    $files[] = [
-                        "type"=>"folder", 
-                        "name"=>str_replace(".", "&dd", $folder), 
-                        "extension"=>pathinfo(base_path()."/".$folder,PATHINFO_EXTENSION), 
-                        "path"=>pathinfo(base_path()."/".$folder, PATHINFO_BASENAME) 
-                    ]; 
-                }
-                elseif(is_file($folder)){ 
-                    $files[] = [
-                        "type"=>"file", 
-                        "name"=>str_replace(".", "&dd", $folder), 
-                        "extension"=>pathinfo(base_path()."/".$folder,PATHINFO_EXTENSION), 
-                        "path"=>pathinfo(base_path()."/".$folder, PATHINFO_BASENAME) 
-                    ];
-                }
-            }
-
-        dd($files); 
-        return view("test.folder")->with("files", $files); 
+        
+        foreach($scandir as $item){
+           if(is_dir(base_path()."/".$name."/".$item)){
+            $files[] = [
+                "name"=>$item, 
+                "type"=>"folder", 
+                "extension"=>pathinfo(base_path()."/".$name."/".$item,PATHINFO_EXTENSION) 
+            ]; 
+           } 
+           if(is_file(base_path()."/".$name."/".$item)){
+            $files[] = [
+                "name"=>$item, 
+                "type"=>"file", 
+                "extension"=>pathinfo(base_path()."/".$name."/".$item,PATHINFO_EXTENSION)
+            ]; 
+           } 
+        }  
+        
+         return view("test.folder")->with("files", $files);
     } 
 
     else{

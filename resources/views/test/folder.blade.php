@@ -24,7 +24,7 @@
     <ul>
         @foreach ($files as $file)
             @if ($file['type'] == 'folder')
-            <li><a class="hover:text-red-400 transition text-white font-mono my-2" href="{{route('content.view', ['name'=>$file['name'], 'type'=>$file['type']])}}"><span class="text-lg p-2 mr-1">📁</span>{{$file['name']}}</a></li>
+            <li><a class="hover:text-red-400 transition text-white font-mono my-2" href="{{route('content.view', ['name'=>$file['name'], 'type'=>$file['type']])}}"><span class="text-lg p-2 mr-1">📁</span>{{str_replace("&dd",".", $file['name'])}}</a></li>
             @else
             <li><a class="hover:text-red-400 transition text-white font-mono my-2" href="{{route('content.view', ['name'=>$file['name'], 'type'=>$file['type']])}}"><span class="text-lg p-2 mr-1">📄</span>{{str_replace("&dd",".", $file['name'])}}</a></li>
             @endif
