@@ -27,7 +27,7 @@ Route::get('test/', function(){
     $path = base_path()."/resources/config/";  
     $content = new Content(); 
     $files = $content->configFiles($path);
-    return view('test.table')->with(['files'=>$files]); 
+    return view('test.content')->with(['files'=>$files]); 
 }); 
 
 
@@ -76,13 +76,9 @@ Route::get("/dir", function(){
     return view("test.folder")->with("files", $files); 
 }); 
 
-Route::get("/dir/{file}", function($file){
-    return $file; 
-}); 
-
 
 // Content of file
-Route::get("/content/{name}/{type}", function($name = null, $type=null){
+Route::get("/dir/{name}/{type}", function($name = null, $type=null){
 
     if($type == "folder"){
         $scandir = scandir(base_path()."/".$name) ; 
@@ -111,12 +107,11 @@ Route::get("/content/{name}/{type}", function($name = null, $type=null){
     } 
 
     else{
-        return $name." ".$type; 
+        $content = new Content(); 
+        $path = base_path()."/".str_replace("&dd", ".", $name); 
+        return view("test.fileEdit")->with(['content'=>$content->FileRead($path)]); 
     }
 })->name("content.view"); 
-
-
-
 
 // Fallback Route 
 Route::fallback(function () {
