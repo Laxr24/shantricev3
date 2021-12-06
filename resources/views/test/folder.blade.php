@@ -20,7 +20,7 @@
 
 </head>
 <body class="  bg-gray-800 md:px-20 px-3 py-3" >
-  
+  <div class="">
     <ul>
         @foreach ($files as $file)
             @if ($file['type'] == 'folder')
@@ -30,5 +30,6 @@
             @endif
         @endforeach
     </ul>
+  </div>
 </body>
 </html>

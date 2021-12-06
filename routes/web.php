@@ -51,66 +51,22 @@ Route::get('/models', function(){
 // Files and folder directory listing
 Route::get("/dir", function(){  
 
-    $scandir = scandir(base_path()) ; 
-     
-    $files = []; 
-        foreach ($scandir as $folder) {
-            if(is_dir($folder)){
-                $files[] = [
-                    "type"=>"folder", 
-                    "name"=>str_replace(".", "&dd", $folder), 
-                    "extension"=>pathinfo(base_path()."/".$folder,PATHINFO_EXTENSION) 
-                ]; 
-            }
-            elseif(is_file($folder)){ 
-                $files[] = [
-                    "type"=>"file", 
-                    "name"=>str_replace(".", "&dd", $folder), 
-                    "extension"=>pathinfo(base_path()."/".$folder,PATHINFO_EXTENSION) 
-                ];
-            }
-        }
-
-
-    // dd($files); 
-    return view("test.folder")->with("files", $files); 
+   $content = new Content(); 
+   $files = $content->scanDir(base_path());  
+   return $files; 
+   return view("test.folder")->with("files", $files); 
 }); 
 
 
 // Content of file
 Route::get("/dir/{name}/{type}", function($name = null, $type=null){
+ 
+// return $path; 
+   $content = new Content(); 
+   $files = $content->scanDir(__DIR__); 
+   return $files;  
+   return view("test.folder")->with("files", $files);
 
-    if($type == "folder"){
-        $path = base_path()."/".$name; 
-        $scandir = scandir($path) ; 
-         
-        $files = []; 
-        
-        foreach($scandir as $item){
-           if(is_dir(base_path()."/".$name."/".$item)){
-            $files[] = [
-                "name"=>$item, 
-                "type"=>"folder", 
-                "extension"=>pathinfo(base_path()."/".$name."/".$item,PATHINFO_EXTENSION) 
-            ]; 
-           } 
-           if(is_file(base_path()."/".$name."/".$item)){
-            $files[] = [
-                "name"=>$item, 
-                "type"=>"file", 
-                "extension"=>pathinfo(base_path()."/".$name."/".$item,PATHINFO_EXTENSION)
-            ]; 
-           } 
-        }  
-        
-         return view("test.folder")->with("files", $files);
-    } 
-
-    else{
-        $content = new Content(); 
-        $path = base_path()."/".str_replace("&dd", ".", $name); 
-        return view("test.fileEdit")->with(['content'=>$content->FileRead($path)]); 
-    }
 })->name("content.view"); 
 
 // Fallback Route 

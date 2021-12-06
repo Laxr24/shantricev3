@@ -1,6 +1,8 @@
 <?php 
 namespace App\MyClass;
 
+use function PHPUnit\Framework\directoryExists;
+
 class Content{
     
     /**
@@ -343,8 +345,46 @@ class Content{
     }
 
 
+    /**
+     * scanDir($path), $path is the folder path that you want to scan and generate folder tree
+     * It'll return a PHP object with folder, subfolders and files with their path and extensions
+     */
+    public function scanDir($path){
+        $fileOrFolder = []; 
+
+        // Scans the base directory and puts all files,folder and subfolders in nested PHP object $fileOrFolder
+        foreach(scandir($path) as $value){
+            $fileOrFolderPath = pathinfo($path."/".$value, PATHINFO_DIRNAME);
+
+            if(directoryExists($fileOrFolderPath) && is_dir($path."/".$value)){
+                $hasSubFolder = []; 
+                //checks if has sub folders or file
+              
+                $fileOrFolder[]=[
+                    "type"=>"folder", 
+                    "name"=>$value, 
+                    "extension"=>"folder", 
+                    "path"=> $fileOrFolderPath."/".$value
+                ]; 
+            }
+            elseif(file_exists($fileOrFolderPath."/".$value) || is_file($fileOrFolderPath."/".$value)){
+                 
+                $fileOrFolder[]=[
+                    "type"=>"file", 
+                    "name"=>$value, 
+                    "extension"=>pathinfo($fileOrFolderPath."/".$value, PATHINFO_EXTENSION), 
+                    "path"=>$fileOrFolderPath."/".$value
+                ]; 
+            } 
+
+            
+        }
+        return $fileOrFolder; 
+    }
 
 
 
 
+
+// End of class 
     }
