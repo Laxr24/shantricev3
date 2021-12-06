@@ -1,6 +1,7 @@
 <?php
 
 use App\MyClass\Content;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -50,24 +51,11 @@ Route::get('/models', function(){
 
 // Files and folder directory listing
 Route::get("/dir", function(){  
-
    $content = new Content(); 
    $files = $content->scanDir(base_path());  
-   return $files; 
+//    return $files; 
    return view("test.folder")->with("files", $files); 
 }); 
-
-
-// Content of file
-Route::get("/dir/{name}/{type}", function($name = null, $type=null){
- 
-// return $path; 
-   $content = new Content(); 
-   $files = $content->scanDir(base_path()."/".$name); 
-   return $files; 
-   return view("test.folder")->with("files", $files);
-
-})->name("content.view"); 
 
 // Fallback Route 
 Route::fallback(function () {
