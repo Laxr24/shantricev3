@@ -365,7 +365,6 @@ class Content{
                     "type"=>"folder", 
                     "name"=>$value, 
                     "extension"=>"folder", 
-                    "path"=> $fileOrFolderPath."/".$value,
                     "baseName"=> $fileOrFolderBaseName,
                     "subfolder"=>$sub
                 ]; 
@@ -375,8 +374,7 @@ class Content{
                 $fileOrFolder[]=[
                     "type"=>"file", 
                     "name"=>$value, 
-                    "extension"=>pathinfo($fileOrFolderPath."/".$value, PATHINFO_EXTENSION), 
-                    "path"=>$fileOrFolderPath."/".$value
+                    "extension"=>pathinfo($fileOrFolderPath."/".$value, PATHINFO_EXTENSION)
                 ]; 
             } 
 
@@ -385,8 +383,68 @@ class Content{
     }
 
 
+    /**
+     * lookFor($path) , $path is the base parameter where the finder will look for the
+     * containing folder or file and return and object 
+     */
+    public function lookFor($path, $fileOrFolder){
+
+        // return $path; 
+        $found = 0; 
+        while($found <= 200){
+           
+                var_dump(   $this->searching($path, $fileOrFolder)); 
+                echo "<br>"; 
+
+            $found++; 
+        }
 
 
+    }
+
+
+
+    /**
+     * Supplimentery method for lookFor method
+     */
+    private function searching($path, $fileOrFolder){
+        
+        $filePath = $path; 
+        $name = $fileOrFolder; 
+        $level = 0; 
+        $fileInfo = []; 
+
+        // scan
+        $scaned = array_diff(scandir($filePath),['.', '..']);
+
+        // search
+
+        foreach($scaned as $i=>$j){
+            if($j == $name){
+                return $fileInfo[]= [
+                    "found"=>true, 
+                    "name"=>$j, 
+                    "path"=>$filePath.$j
+                ]; 
+            }
+
+            
+            elseif(is_dir($filePath.$j)){
+                $filePath.="/".$j; 
+                $name = $j; 
+            }
+
+            else{
+                 return $fileInfo[]= [
+                    "found"=>false, 
+                    "name"=>$j, 
+                    "path"=>$filePath.$j
+                ];
+            }
+        
+        }
+    
+   }
 
 // End of class 
     }
