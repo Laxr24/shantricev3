@@ -389,68 +389,69 @@ class Content{
      */
     public function lookFor($path, $name){
 
-        $type =  $this->searching($path, $name); 
-         
-        return $type; 
-
-
-    }
-
-
-
-    /**
-     * Supplimentery method for lookFor method
-     */
-    public function searching($givenPath, $givenName = null ){
-        
-        $givenPath = $givenPath; 
-        $givenName = $givenName; 
-
-        $found = false; 
-
-        $count = 0; 
-
-        $rootFiles = []; 
-
-        $tempPath = ""; 
-
-        $dir = array_diff(scandir($givenPath), ['.', '..']); 
-
-        foreach($dir as $file){
-            $rootFiles[]= $file; 
+        function matchFile($path, $name, $givenname){
+            if(file_exists($path) && $name == $givenname ){
+                return true; 
+            } 
+            else{
+                return false; 
+            }
         }
 
-
-        while($found != true ){
-            
-            // Search algorithm
-
-            if(is_dir($givenPath.$rootFiles[$count])){
-                $found = true; 
-                $tempPath =  $givenPath.$rootFiles[$count]; 
-                echo $tempPath; 
-                echo "<br>"; 
-                echo $rootFiles[$count]; 
+        function index($filePath ){
+            $files = []; 
+            $dir = array_diff(scandir($filePath), ['.', '..']); 
+            foreach($dir as $i){
+                $files[]= [
+                    "name"=>pathinfo($filePath."/".$i, PATHINFO_BASENAME), 
+                    "path"=>pathinfo($filePath."/".$i, PATHINFO_DIRNAME)."/".pathinfo($filePath."/".$i, PATHINFO_BASENAME), 
+                    "base"=>pathinfo($filePath."/".$i, PATHINFO_DIRNAME), 
+                    "extension"=>pathinfo($filePath."/".$i, PATHINFO_EXTENSION)
+                ] ; 
+                
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $count++; 
+            return $files; 
         }
-       
-   }
+
+
+
+
+
+
+        $givenPath = $path; 
+        $givenName = $name; 
+        $found = false; 
+
+
+        $tempPath = []; 
+
+        while($found == false){
+            $files = index($givenPath); 
+            $flag = 0; 
+
+            for($flag; $flag<count($files); $flag++){
+
+                if(matchFile($files[$flag]['path'],$files[$flag]['name'], $givenName )){
+                    // echo "<br>"; 
+                    $found = true; 
+                    return  $files[$flag];
+                }
+
+                else{
+                    $tempPath[] = $files[$flag]['path'] ;  
+                }
+
+                
+            }
+        }
+
+        return $tempPath; 
+
+
+
+      // End of lookingFor()   
+    }
 
 // End of class 
     }

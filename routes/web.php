@@ -61,7 +61,7 @@ Route::get("/dir", function(){
 Route::get('/file/{fileName}', function ($fileName = '' ){
     $content = new Content(); 
     $path = base_path()."/resources/config/"; 
-    return $content->lookFor($path, "newFolder"); 
+    return $content->lookFor($path, "folder"); 
 });
 
 // Fallback Route 
