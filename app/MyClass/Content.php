@@ -387,17 +387,11 @@ class Content{
      * lookFor($path) , $path is the base parameter where the finder will look for the
      * containing folder or file and return and object 
      */
-    public function lookFor($path, $fileOrFolder){
+    public function lookFor($path, $name){
 
-        // return $path; 
-        $found = 0; 
-        while($found <= 200){
-           
-                var_dump(   $this->searching($path, $fileOrFolder)); 
-                echo "<br>"; 
-
-            $found++; 
-        }
+        $type =  $this->searching($path, $name); 
+         
+        
 
 
     }
@@ -407,43 +401,52 @@ class Content{
     /**
      * Supplimentery method for lookFor method
      */
-    private function searching($path, $fileOrFolder){
+    public function searching($givenPath, $givenName){
         
-        $filePath = $path; 
-        $name = $fileOrFolder; 
+        $givenPath = $givenPath; 
+        $givenName = $givenName; 
+
+        //    Flags 
+        $isDir = false ; 
         $level = 0; 
-        $fileInfo = []; 
 
-        // scan
-        $scaned = array_diff(scandir($filePath),['.', '..']);
+        // temporary index of the files
+        $tempIndex = []; 
 
-        // search
-
-        foreach($scaned as $i=>$j){
-            if($j == $name){
-                return $fileInfo[]= [
-                    "found"=>true, 
-                    "name"=>$j, 
-                    "path"=>$filePath.$j
+        // Cheak if it is a directory 
+        if(is_dir($givenPath)){
+            $files = array_diff(scandir($givenPath), ['.', '..']); 
+            foreach($files as $value){
+                // check if found 
+                if($value == $givenName){
+                    return $tempIndex[] = [
+                        "name"=>$value, 
+                        "path"=>$givenPath."/".$value."/", 
+                        "found"=>true , 
+                        "type"=> filetype($givenPath."/".$value), 
+                        "level"=>$level
+                    ];
+                }
+                // Otherwise index their info
+                $tempIndex[] = [
+                    "name"=>$value, 
+                    "path"=>$givenPath."/".$value."/", 
+                    "found"=>false , 
+                    "type"=> filetype($givenPath."/".$value), 
+                    "level"=>$level
                 ]; 
             }
-
-            
-            elseif(is_dir($filePath.$j)){
-                $filePath.="/".$j; 
-                $name = $j; 
-            }
-
-            else{
-                 return $fileInfo[]= [
-                    "found"=>false, 
-                    "name"=>$j, 
-                    "path"=>$filePath.$j
-                ];
-            }
-        
         }
-    
+        else{
+            if(file_exists($givenPath)){
+                return $givenPath; 
+            }
+        }
+
+
+
+        return $tempIndex; 
+       
    }
 
 // End of class 
