@@ -391,7 +391,7 @@ class Content{
 
         $type =  $this->searching($path, $name); 
          
-        
+        return $type; 
 
 
     }
@@ -401,51 +401,54 @@ class Content{
     /**
      * Supplimentery method for lookFor method
      */
-    public function searching($givenPath, $givenName){
+    public function searching($givenPath, $givenName = null ){
         
         $givenPath = $givenPath; 
         $givenName = $givenName; 
 
-        //    Flags 
-        $isDir = false ; 
-        $level = 0; 
+        $found = false; 
 
-        // temporary index of the files
-        $tempIndex = []; 
+        $count = 0; 
 
-        // Cheak if it is a directory 
-        if(is_dir($givenPath)){
-            $files = array_diff(scandir($givenPath), ['.', '..']); 
-            foreach($files as $value){
-                // check if found 
-                if($value == $givenName){
-                    return $tempIndex[] = [
-                        "name"=>$value, 
-                        "path"=>$givenPath."/".$value."/", 
-                        "found"=>true , 
-                        "type"=> filetype($givenPath."/".$value), 
-                        "level"=>$level
-                    ];
-                }
-                // Otherwise index their info
-                $tempIndex[] = [
-                    "name"=>$value, 
-                    "path"=>$givenPath."/".$value."/", 
-                    "found"=>false , 
-                    "type"=> filetype($givenPath."/".$value), 
-                    "level"=>$level
-                ]; 
-            }
-        }
-        else{
-            if(file_exists($givenPath)){
-                return $givenPath; 
-            }
+        $rootFiles = []; 
+
+        $tempPath = ""; 
+
+        $dir = array_diff(scandir($givenPath), ['.', '..']); 
+
+        foreach($dir as $file){
+            $rootFiles[]= $file; 
         }
 
 
+        while($found != true ){
+            
+            // Search algorithm
 
-        return $tempIndex; 
+            if(is_dir($givenPath.$rootFiles[$count])){
+                $found = true; 
+                $tempPath =  $givenPath.$rootFiles[$count]; 
+                echo $tempPath; 
+                echo "<br>"; 
+                echo $rootFiles[$count]; 
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $count++; 
+        }
        
    }
 
