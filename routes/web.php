@@ -53,7 +53,7 @@ Route::get('/models', function(){
 Route::get("/dir", function(){  
    $content = new Content(); 
    $files = $content->scanDir(base_path());  
-   return $files; 
+//    return $files; 
    return view("test.folder")->with("files", $files); 
 }); 
 

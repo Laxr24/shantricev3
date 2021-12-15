@@ -2,6 +2,7 @@
 namespace App\MyClass;
 
 use function PHPUnit\Framework\directoryExists;
+use mikehaertl\shellcommand\Command;
 
 class Content{
     
@@ -352,7 +353,7 @@ class Content{
     public function scanDir($path){
         $fileOrFolder = []; 
         // Scans the base directory and puts all files,folder and subfolders in nested PHP object $fileOrFolder
-        foreach(scandir($path) as $value){
+        foreach(array_diff(scandir($path), ['.', '..']) as $value){
             $fileOrFolderPath = pathinfo($path."/".$value, PATHINFO_DIRNAME);
             $fileOrFolderBaseName = pathinfo($fileOrFolderPath, PATHINFO_BASENAME);
 
@@ -384,73 +385,69 @@ class Content{
 
 
     /**
-     * lookFor($path) , $path is the base parameter where the finder will look for the
-     * containing folder or file and return and object 
+     * lookFor($path) , $path is the location  where the method will look for the
+     * containing folder or file and return userful object
      */
     public function lookFor($path, $name){
 
-        function matchFile($path, $name, $givenname){
-            if(file_exists($path) && $name == $givenname ){
-                return true; 
-            } 
-            else{
-                return false; 
-            }
-        }
-
-        function index($filePath ){
-            $files = []; 
-            $dir = array_diff(scandir($filePath), ['.', '..']); 
-            foreach($dir as $i){
-                $files[]= [
-                    "name"=>pathinfo($filePath."/".$i, PATHINFO_BASENAME), 
-                    "path"=>pathinfo($filePath."/".$i, PATHINFO_DIRNAME)."/".pathinfo($filePath."/".$i, PATHINFO_BASENAME), 
-                    "base"=>pathinfo($filePath."/".$i, PATHINFO_DIRNAME), 
-                    "extension"=>pathinfo($filePath."/".$i, PATHINFO_EXTENSION)
-                ] ; 
-                
-            }
-
-            return $files; 
-        }
-
-
-
-
-
-
         $givenPath = $path; 
         $givenName = $name; 
-        $found = false; 
+        
+        $allFiles = []; 
+        $flag = false; 
+        // scans and returns files object
+        function scanner($givenPath){
+            $dir = array_diff(scandir($givenPath), ['.', '..']); 
+            $files = []; 
 
-
-        $tempPath = []; 
-
-        while($found == false){
-            $files = index($givenPath); 
-            $flag = 0; 
-
-            for($flag; $flag<count($files); $flag++){
-
-                if(matchFile($files[$flag]['path'],$files[$flag]['name'], $givenName )){
-                    // echo "<br>"; 
-                    $found = true; 
-                    return  $files[$flag];
-                }
-
-                else{
-                    $tempPath[] = $files[$flag]['path'] ;  
-                }
-
-                
+            $files["location"] =$givenPath; 
+            foreach($dir as $i){
+                $files[] = [
+                    "name"=>$i, 
+                    "path"=>pathinfo($i, PATHINFO_ALL)
+                ]; 
             }
+
+            
+            $folders = []; 
+            // $folders[]= $files['location']; 
+    
+            
+            for($j=0; $j<count($files)-1; $j++){
+                $indexPath = $files['location']."/".$files[$j]['name']."/";      
+                    $folders[] = $indexPath; 
+            }
+
+            return $folders; 
+
         }
 
-        return $tempPath; 
 
+       $primaryList = scanner($givenPath);
+      
+       for($i=0; $i<count($primaryList); $i++){
+           $index = $primaryList[$i]; 
+          
+            // echo $index; 
+            // echo "<br>" ; 
+            
+            if(is_dir($index)){
+                $allFiles[] = scanner($index); 
+            }
+           
+       }
 
+        return  "<pre>".shell_exec("dir categories.json /s /p")."</pre>"; 
 
-      // End of lookingFor()   
+        // Basic example
+        // $command = new Command('');
+        // if ($command->execute()) {
+        //     return  json_encode($command->getOutput(), true);
+        // } else {
+        //     echo $command->getError();
+        //     $exitCode = $command->getExitCode();
+        // }
+   
     }
 
 // End of class 
