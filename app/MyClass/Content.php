@@ -388,67 +388,28 @@ class Content{
      * lookFor($path) , $path is the location  where the method will look for the
      * containing folder or file and return userful object
      */
-    public function lookFor($path, $name){
+    public function lookFor($name){
 
-        $givenPath = $path; 
-        $givenName = $name; 
-        
-        $allFiles = []; 
-        $flag = false; 
-        // scans and returns files object
         function scanner($givenPath){
             $dir = array_diff(scandir($givenPath), ['.', '..']); 
             $files = []; 
 
             $files["location"] =$givenPath; 
             foreach($dir as $i){
-                $files[] = [
-                    "name"=>$i, 
-                    "path"=>pathinfo($i, PATHINFO_ALL)
-                ]; 
+                $files[] = pathinfo($i, PATHINFO_ALL); 
             }
-
-            
-            $folders = []; 
-            // $folders[]= $files['location']; 
-    
-            
-            for($j=0; $j<count($files)-1; $j++){
-                $indexPath = $files['location']."/".$files[$j]['name']."/";      
-                    $folders[] = $indexPath; 
-            }
-
-            return $folders; 
-
         }
+ 
+       
+       
+        $output = null ; 
+        exec("dir ".$name." /s /p", $output); 
+        $path =  str_replace('Directory of', '', $output[3])."/".$name; 
+        $realpath = str_replace("\\" , "/", $path); 
 
+        return scanner($realpath); 
 
-       $primaryList = scanner($givenPath);
-      
-       for($i=0; $i<count($primaryList); $i++){
-           $index = $primaryList[$i]; 
-          
-            // echo $index; 
-            // echo "<br>" ; 
-            
-            if(is_dir($index)){
-                $allFiles[] = scanner($index); 
-            }
-           
-       }
-
-        return  "<pre>".shell_exec("dir categories.json /s /p")."</pre>"; 
-
-        // Basic example
-        // $command = new Command('');
-        // if ($command->execute()) {
-        //     return  json_encode($command->getOutput(), true);
-        // } else {
-        //     echo $command->getError();
-        //     $exitCode = $command->getExitCode();
-        // }
-   
     }
 
 // End of class 
-    }
+}

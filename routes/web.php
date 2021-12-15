@@ -53,15 +53,17 @@ Route::get('/models', function(){
 Route::get("/dir", function(){  
    $content = new Content(); 
    $files = $content->scanDir(base_path());  
-//    return $files; 
+   return $files; 
    return view("test.folder")->with("files", $files); 
 }); 
 
 // File search from global directory
 Route::get('/file/{fileName}', function ($fileName = '' ){
-    $content = new Content(); 
-    $path = base_path()."/resources/config/"; 
-    return $content->lookFor($path, "folder"); 
+    $content = new Content();  
+    $path = base_path()."resources/config/"; 
+    return $content->lookFor($fileName); 
+
+  
 });
 
 // Fallback Route 
