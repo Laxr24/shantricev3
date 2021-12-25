@@ -401,14 +401,17 @@ class Content{
         }
  
        
-       
-        $output = null ; 
-        exec("dir ".$name." /s /p", $output); 
-        $path =  str_replace('Directory of', '', $output[3])."/".$name; 
-        $realpath = str_replace("\\" , "/", $path); 
+        // For windows system
 
-        return scanner($realpath); 
+        // $output = null ; 
+        // exec("dir ".$name." /s /p", $output); 
+        // $path =  str_replace('Directory of', '', $output[3])."/".$name; 
+        // $realpath = str_replace("\\" , "/", $path); 
 
+        // For linux system
+        $outputLinuxPath =  exec("find . -name ". $name); 
+
+        return $this->FileRead($outputLinuxPath); 
     }
 
 // End of class 
