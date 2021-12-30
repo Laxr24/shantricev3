@@ -15,8 +15,8 @@ class Content{
      * #Get Contents and display data
      * #Update contents on the file 
      * #You can even Delete the config file itself!
-     * 
-     * --Author: K.M. Shantonu BSc. EEE, UITS
+     * #2021
+     * --Author: K.M. Shantonu BSc. EEE(Ongoing), UITS
      */
 
 
@@ -390,15 +390,15 @@ class Content{
      */
     public function lookFor($name){
 
-        function scanner($givenPath){
-            $dir = array_diff(scandir($givenPath), ['.', '..']); 
-            $files = []; 
+        // function scanner($givenPath){
+        //     $dir = array_diff(scandir($givenPath), ['.', '..']); 
+        //     $files = []; 
 
-            $files["location"] =$givenPath; 
-            foreach($dir as $i){
-                $files[] = pathinfo($i, PATHINFO_ALL); 
-            }
-        }
+        //     $files["location"] =$givenPath; 
+        //     foreach($dir as $i){
+        //         $files[] = pathinfo($i, PATHINFO_ALL); 
+        //     }
+        // }
  
        
         // For windows system
@@ -411,8 +411,46 @@ class Content{
         // For linux system
         $outputLinuxPath =  exec("find . -name ". $name); 
 
-        return $this->FileRead($outputLinuxPath); 
+        return "<pre>".$this->FileRead($outputLinuxPath)."</pre>"; 
+        // return $outputLinuxPath; 
     }
+
+    /**
+     * nameResolver($fileName, true or false )
+     * Default method will take a input string and return the 
+     * real filename without the encoded part which is used to 
+     * replace the dot extensions. 
+     * 
+     */
+
+     public function nameResolver(string $fileName = null , $encoding = null ){
+
+
+        //Check if encoded is selected or not
+
+        if($fileName != null && $encoding == null ){
+            return $fileName; 
+        }
+
+        $encodedStringSecret = "ZG90"; 
+
+        // If the filename was given or not. returns if not. 
+        if($fileName == null){
+            return "file name was empty"; 
+        }
+
+        if($encoding){
+            $encodedName = str_replace(".", $encodedStringSecret, $fileName); 
+            return $encodedName; 
+        }
+
+        else if(!$encoding){
+            $decodedString = str_replace($encodedStringSecret, ".", $fileName); 
+            return $decodedString; 
+        }
+        
+
+     }
 
 // End of class 
 }

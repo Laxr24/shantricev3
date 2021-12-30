@@ -41,7 +41,7 @@ Route::get('/models', function(){
 Route::get("/dir", function(){  
    $content = new Content(); 
    $files = $content->scanDir(base_path());  
-   return $files; 
+//    return $files; 
    return view("test.folder")->with("files", $files); 
 }); 
 
@@ -49,11 +49,17 @@ Route::get("/dir", function(){
 Route::get('/file/{fileName}', function ($fileName = '' ){
     $content = new Content();  
     $path = base_path()."resources/config/"; 
-    return $content->lookFor('toto.json'); 
+    return $content->lookFor('webpack.mix.js'); 
 });
 
 
+// Name resolver test
+Route::get("/filename", function(){
+    $content = new Content();  
 
-Route::get("/dodo", function(){
-    return "Custom path is working"; 
+    return response()->json([
+        "encoded"=>$content->nameResolver("content.json.nestor.living", true), 
+        "decoded"=>$content->nameResolver("content.json.nestor.living"),
+        "No Dotted File"=>$content->nameResolver("EXAMPLE")
+    ]); 
 }); 
