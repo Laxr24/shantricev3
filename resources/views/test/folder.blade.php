@@ -23,11 +23,7 @@
   <div class="">
     <ul>
         @foreach ($files as $file)
-            @if ($file['type'] == 'folder')
-            <li><a class="hover:text-red-400 transition text-white font-mono my-2" href="#"><span class="text-lg p-2 mr-1">📁</span>{{str_replace("&dd",".", $file['name'])}}</a></li>
-            @else
-            <li><a class="hover:text-red-400 transition text-white font-mono my-2" href="#"><span class="text-lg p-2 mr-1">📄</span>{{str_replace("&dd",".", $file['name'])}}</a></li>
-            @endif
+            <li><a class="hover:text-red-400 transition text-white font-mono my-2" href="{{'/file/'.nameResolver($file, true)}}"><span class="text-lg p-2 mr-1">🗂</span>{{ nameResolver($file)}}</a></li>            
         @endforeach
     </ul>
   </div>

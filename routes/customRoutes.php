@@ -49,8 +49,8 @@ Route::get("/dir", function(){
 // File search from global directory
 Route::get('/file/{fileName}', function ($fileName = '' ){
     $content = new Content();  
-    $path = base_path()."resources/config/"; 
-    return $content->lookFor('webpack.mix.js'); 
+    $filePath =  $content->lookFor($content->nameResolver($fileName, false));
+    return $content->FileRead($filePath);  
 });
 
 
@@ -59,7 +59,8 @@ Route::get("/filename", function(){
     $content = new Content();  
     return response()->json([
         "encoded"=>$content->nameResolver("content.json.nestor.living", true), 
-        "decoded"=>$content->nameResolver("contentZG90jsonZG90nestorZG90living", true),
-        "No Dotted File"=>$content->nameResolver("EXAMPLE")
+        "decoded"=>$content->nameResolver("contentZG90jsonZG90nestorZG90living", false),
+        "No Dotted File decode"=>$content->nameResolver("dummZG90jd", true), 
+        "No dot file straight"=>$content->nameResolver("Name"), 
     ]); 
 }); 

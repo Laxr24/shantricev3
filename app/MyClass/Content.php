@@ -351,36 +351,20 @@ class Content{
      * It'll return a PHP object with folder, subfolders and files with their path and extensions
      */
     public function scanDir($path){
-        $fileOrFolder = []; 
-        // Scans the base directory and puts all files,folder and subfolders in nested PHP object $fileOrFolder
-        foreach(array_diff(scandir($path), ['.', '..']) as $value){
-            $fileOrFolderPath = pathinfo($path."/".$value, PATHINFO_DIRNAME);
-            $fileOrFolderBaseName = pathinfo($fileOrFolderPath, PATHINFO_BASENAME);
+        $fileAndFolder = []; 
 
-            if(directoryExists($fileOrFolderPath) && is_dir($path."/".$value)){   
-                $sub= false; 
-                if(count(scandir($path."/".$value))>2){
-                    $sub = true ; 
-                } 
-                $fileOrFolder[]=[
-                    "type"=>"folder", 
-                    "name"=>$value, 
-                    "extension"=>"folder", 
-                    "baseName"=> $fileOrFolderBaseName,
-                    "subfolder"=>$sub
-                ]; 
+        if(is_dir($path)){
+            $items = array_diff(scandir($path), ['.', '..']); 
+            foreach($items as $i){
+                $fileAndFolder[] = $i; 
             }
-            elseif(file_exists($fileOrFolderPath."/".$value) || is_file($fileOrFolderPath."/".$value)){
-                 
-                $fileOrFolder[]=[
-                    "type"=>"file", 
-                    "name"=>$value, 
-                    "extension"=>pathinfo($fileOrFolderPath."/".$value, PATHINFO_EXTENSION)
-                ]; 
-            } 
 
+            return $fileAndFolder; 
         }
-        return $fileOrFolder; 
+        else{
+            return "Not a dirrectory"; 
+        }
+        
     }
 
 
@@ -432,14 +416,18 @@ class Content{
             return "file name was empty"; 
         }
 
-        if($encoding == true ){
-            $encodedName = str_replace(".", $encodedStringSecret, $fileName); 
-            return $encodedName; 
-        }
 
-        if($encoding == false ){
-            $decodedString = str_replace($encodedStringSecret, ".", $fileName); 
-            return $decodedString; 
+        switch($encoding){
+            case true: 
+                $encodedName = str_replace(".", $encodedStringSecret, $fileName); 
+                return $encodedName; 
+            case false: 
+                $decodedString = str_replace($encodedStringSecret, ".", $fileName); 
+                return $decodedString; 
+            case null && $fileName != null: 
+                return $fileName;
+
+                
         }
         
 
