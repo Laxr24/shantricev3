@@ -425,13 +425,6 @@ class Content{
 
      public function nameResolver(string $fileName = null , $encoding = null ){
 
-
-        //Check if encoded is selected or not
-
-        if($fileName != null && $encoding == null ){
-            return $fileName; 
-        }
-
         $encodedStringSecret = "ZG90"; 
 
         // If the filename was given or not. returns if not. 
@@ -439,12 +432,12 @@ class Content{
             return "file name was empty"; 
         }
 
-        if($encoding){
+        if($encoding == true ){
             $encodedName = str_replace(".", $encodedStringSecret, $fileName); 
             return $encodedName; 
         }
 
-        else if(!$encoding){
+        if($encoding == false ){
             $decodedString = str_replace($encodedStringSecret, ".", $fileName); 
             return $decodedString; 
         }

@@ -56,10 +56,9 @@ Route::get('/file/{fileName}', function ($fileName = '' ){
 // Name resolver test
 Route::get("/filename", function(){
     $content = new Content();  
-
     return response()->json([
         "encoded"=>$content->nameResolver("content.json.nestor.living", true), 
-        "decoded"=>$content->nameResolver("content.json.nestor.living"),
+        "decoded"=>$content->nameResolver("contentZG90jsonZG90nestorZG90living", true),
         "No Dotted File"=>$content->nameResolver("EXAMPLE")
     ]); 
 }); 
