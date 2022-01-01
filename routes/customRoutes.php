@@ -1,6 +1,7 @@
 <?php 
 
 use App\MyClass\Content;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/add-content', function(){
     $path = base_path()."/resources/config/"; 
