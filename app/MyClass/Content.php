@@ -395,8 +395,8 @@ class Content{
         // For linux system
         $outputLinuxPath =  exec("find . -name ". $name); 
 
-        return "<pre>".$this->FileRead($outputLinuxPath)."</pre>"; 
-        // return $outputLinuxPath; 
+        // return "<pre>".$this->FileRead($outputLinuxPath)."</pre>"; 
+        return $outputLinuxPath; 
     }
 
     /**

@@ -47,10 +47,12 @@ Route::get("/dir", function(){
 }); 
 
 // File search from global directory
-Route::get('/file/{fileName}', function ($fileName = '' ){
+Route::get('/file/{fileName}', function ($fileName = null ){
     $content = new Content();  
-    $filePath =  $content->lookFor($content->nameResolver($fileName, false));
-    return $content->FileRead($filePath);  
+    $filePath =  $content->lookFor($fileName);
+    $files = $content->scanDir($filePath);  
+
+    return view("test.folder")->with("files", $files); 
 });
 
 
