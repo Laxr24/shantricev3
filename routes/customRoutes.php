@@ -1,7 +1,9 @@
 <?php 
 
 use App\MyClass\Content;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/add-content', function(){
     $path = base_path()."/resources/config/"; 
@@ -66,3 +68,9 @@ Route::get("/filename", function(){
         "No dot file straight"=>$content->nameResolver("Name"), 
     ]); 
 }); 
+
+
+
+$content = new Content();
+
+$content->myRoute("papa", "default"); 
