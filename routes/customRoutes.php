@@ -71,6 +71,32 @@ Route::get("/filename", function(){
 
 
 
+// Setting short view routes
 $content = new Content();
-
 $content->myRoute("papa", "default"); 
+
+
+
+// Testing sessions
+Route::get('/login', function(){
+    return view("test.login"); 
+}); 
+
+Route::post("/login", function(Request $request){
+
+    $con = new Content();
+    $con->login($request->name, $request->email);
+    return redirect("/user"); 
+}); 
+
+Route::get("/user", function(){
+    $con = new Content();
+    return $con->authenticate(1, "laxr", "uits.shaan@gmail.com");
+    return view("test.session1"); 
+}); 
+Route::get("/logout", function(){
+    $con = new Content(); 
+    $con->logout(); 
+    return view("test.session2"); 
+}); 
+

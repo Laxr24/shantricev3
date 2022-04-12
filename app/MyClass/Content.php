@@ -158,8 +158,6 @@ class Content
 
     public function add(string $name, array $value = null)
     {
-
-
         if (!file_exists($this->file)) {
             return response()->json(["error" => "Target file was not found"]);
         }
@@ -431,28 +429,89 @@ class Content
      * myRoute($routeName,$viewName,  boolean) true or false for CRUD 
      */
 
-    private $routeName, $viewName, $crud, $routeFunction ; 
-    public function myRoute($routeName, $viewName, $crud = false, $routeFunction= null )
+    private $routeName, $viewName, $crud, $routeFunction;
+    public function myRoute($routeName, $viewName, $crud = false, $routeFunction = null)
     {
-        $this->routeName = $routeName; 
-        $this->viewName = $viewName; 
-        $this->crud = $crud ; 
-        $this->routeFunction = $routeFunction; 
+        $this->routeName = $routeName;
+        $this->viewName = $viewName;
+        $this->crud = $crud;
+        $this->routeFunction = $routeFunction;
 
-       if($this->crud == true && $this->routeFunction != null  ){
-        Route::get($routeName, $this->routeFunction);
-        Route::post($routeName, $this->routeFunction);
-       }
-       else{
-        Route::get($this->routeName, function () {
-            return view($this->viewName);
+        if ($this->crud == true && $this->routeFunction != null) {
+            Route::get($routeName, $this->routeFunction);
+            Route::post($routeName, $this->routeFunction);
+        } else {
+            Route::get($this->routeName, function () {
+                return view($this->viewName);
             });
-       }
+        }
+    }
 
-       
 
+
+    /**
+     * Start Session data to authenticate
+     * Set or retrieve data from the session value and send to server
+     * Authenicate user by setting session and updating users.json file
+     * 
+     */
+
+    /**
+     * Login the current user with current session
+     */
+    public function login($name, $email)
+    {
+        $id = rand() - time(); 
+        session_start();
+        // Setting session variables
+        $_SESSION['id'] = $id ;
+        $_SESSION['name'] = $name;
+        $_SESSION['email'] = $email;
+
+        $user = [
+            "id"=> $id, 
+            "name"=>$name,
+            "email"=>$email 
+        ]; 
+
+        $path = base_path()."/resources/config/"; 
+        
+        $this->makeModel($path,"users", json_encode($user)); 
 
     }
+
+    /**
+     * Authenticate the user with existing credentials in the users.json file
+     */
+    public function authenticate($uID, $uName, $uEmail)
+    {
+        session_start();
+        if ($_SESSION) {
+            if ($_SESSION['name'] == $uName && $_SESSION['email'] == $uEmail) {
+                print_r($_SESSION);
+                session_regenerate_id();
+                print_r(session_id());
+            } else {
+                print_r("User Not found");
+            }
+        } else {
+            print("Sorry no user found");
+        }
+    }
+
+    /**
+     * To logout the user with the current session
+     */
+    public function logout()
+    {
+        session_start();
+        session_unset();
+        // remove all session variables
+        session_destroy();
+    }
+
+
+
 
     // End of class 
 }
