@@ -28,5 +28,49 @@
         "content": "dummy",
         "type": "text",
         "customText": "Hello custom text"
+    }, 
+    "alu":{
+        "price": 120
+    },
+    "piyaj":{
+        "price": 955
+    },
+    "potol":{
+        "price": 78
+    },
+    "jhinga":{
+        "price": 45
+    },
+    "Moyda":{
+        "price":{
+            "name": "Dumy Contnt name",
+            "handler": "dum_id",
+            "thumb": "adf.jpg",
+            "content": {
+                "name": "Dumy Contnt name",
+                "handler": "dum_id",
+                "thumb": "adf.jpg",
+                "content": "dummy",
+                "type": "text",
+                "customText": "Hello custom text"
+            },
+            "type": "text",
+            "customText": "Hello custom text"
+        }
+    },
+    "Bird":{
+        "price": 25
+    },
+    "Computer":{
+        "price": 800
+    },
+    "Milk":{
+        "price": 700
+    },
+    "Juice":{
+        "price": 300
+    },
+    "Pickle":{
+        "price": 500
     }
 }

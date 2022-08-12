@@ -33,9 +33,7 @@ Route::get("/edit-content", function(){
 Route::get('/models', function(){
     $content = new Content(); 
     $path = base_path()."/resources/config/"; 
-    return response()
-    ->json(['data'=>$content->models($path)])
-    ->header('Access-Control-Allow-Origin', '*'); 
+    return $content->models($path); 
 }); 
 
 
@@ -73,7 +71,7 @@ Route::get("/filename", function(){
 
 // Setting short view routes
 $content = new Content();
-$content->myRoute("papa", "default"); 
+$content->myRoute("shortroute", "default"); 
 
 
 
@@ -98,5 +96,16 @@ Route::get("/logout", function(){
     $con = new Content(); 
     $con->logout(); 
     return view("test.session2"); 
+}); 
+
+
+Route::get("test", function(){
+    $con = new Content(base_path()."/resources/config/", "content");
+    $data = $con->get(); 
+
+    return $con->paginate($data, 5); 
+    // return $con->get(); 
+
+
 }); 
 

@@ -511,6 +511,28 @@ class Content
     }
 
 
+    /**
+     * Pagination Method to paginate over array of data
+    */
+
+    public function paginate(object $data, int $start, int $range = null){
+        $raw = json_decode(json_encode($data), true); 
+        $keys = array_keys($raw);
+        $paginated = []; 
+        
+        if($range == null){
+            $range = count($raw)-1; 
+        }
+
+        for($start; $start<=$range; $start++){
+            $paginated[$keys[$start]] = $raw[$keys[$start]]; 
+        }
+
+
+        return $paginated; 
+    }
+
+
 
 
     // End of class 
