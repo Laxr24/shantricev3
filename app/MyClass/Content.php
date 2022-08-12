@@ -1,7 +1,6 @@
 <?php
 
 namespace App\MyClass;
-
 use mikehaertl\shellcommand\Command;
 use Illuminate\Support\Facades\Route;
 use function PHPUnit\Framework\directoryExists;
@@ -515,24 +514,107 @@ class Content
      * Pagination Method to paginate over array of data
     */
 
-    public function paginate(object $data, int $start, int $range = null){
+    public function data_pagination($data, int $start =0, int $range = null){
         $raw = json_decode(json_encode($data), true); 
         $keys = array_keys($raw);
         $paginated = []; 
         
         if($range == null){
-            $range = count($raw)-1; 
+            $range = count($raw); 
+        }
+        elseif($range >= count($raw)){
+            $range = count($raw)-1;
         }
 
         for($start; $start<=$range; $start++){
             $paginated[$keys[$start]] = $raw[$keys[$start]]; 
         }
-
-
         return $paginated; 
     }
 
+    private function link(string $className, string $link, string $buttonName){
+        return "<li class='".$className."'><a href='".$link."'>". $buttonName."</a></li>"; 
+    }
 
+
+
+
+
+
+
+    /**
+     * Paginate pages with 
+     * pagination links, datasets
+     */
+
+    public function paginate_page($data,int $range = 5,int $current_page = 0, int $start = 0){
+        $config = []; 
+        $rawData = json_decode(json_encode($data), true);
+        $total_page = floor(count($rawData)/$range); 
+
+        $data_segments = array_chunk($rawData, $range, true);
+
+        if($current_page == $total_page){
+            $data_chunk = $data_segments[$current_page-1]; 
+        }
+        else{
+            $data_chunk = $data_segments[$current_page]; 
+        }
+        
+        // Check if the data is paginatable or not 
+        if(!count($rawData)>$range){
+            return $data; 
+        }
+
+        // Else start to paginate
+
+        // generate links for pages
+        $links = []; 
+        $config["current_page"]=$current_page;  
+        
+        for($i = 0; $i<=$total_page; $i++){
+            if($i == 0){
+                if($i == $current_page){
+                    $links[] = $this->link('pagination_btn current_page',$_SERVER["PATH_INFO"]."?page=".$i, $i);
+                }
+                else{
+                    $links[] = $this->link('pagination_btn',$_SERVER["PATH_INFO"]."?page=".$i, $i);
+                }
+            }
+            elseif($i == $total_page){
+                if($i == $current_page){
+                    $links[] = $this->link('pagination_btn current_page',$_SERVER["PATH_INFO"]."?page=".$i, $i);
+                }
+                else{
+                    $links[] = $this->link('pagination_btn',$_SERVER["PATH_INFO"]."?page=".$i, $i);
+                }
+            }
+            else{
+                if($i == $current_page){
+                    $links[] = $this->link('pagination_btn current_page',$_SERVER["PATH_INFO"]."?page=".$i, $i);
+                }
+                else{
+                    $links[] = $this->link('pagination_btn',$_SERVER["PATH_INFO"]."?page=".$i, $i);
+                }
+            }
+             
+        }   
+
+        if($current_page != 0){
+            $links["previous_btn"] = $this->link("previous_btn",$_SERVER["PATH_INFO"]."?page=".($current_page-1), "Previous"); 
+            $config["previous_page"]=$current_page-1; 
+        }
+        if($current_page != $total_page){
+            $links["next_btn"] = $this->link("next_btn",$_SERVER["PATH_INFO"]."?page=".($current_page+1), "Next"); 
+            $config["next_page"]=$current_page+1;
+        }
+
+        $config["html_links"] = $links; 
+        $config["data"] = $data_chunk; 
+        
+        return $config;  
+
+    }
 
 
     // End of class 

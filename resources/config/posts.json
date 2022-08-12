@@ -1,1 +1,52 @@
-{"type":"posts file content bro"}
+[
+  {
+    "_id": "62f6ace4743bcd19189ecf79",
+    "eyeColor": "brown",
+    "name": "Kaufman Simpson"
+  },
+  {
+    "_id": "62f6ace4ca8cfd12141a9416",
+    "eyeColor": "green",
+    "name": "Hensley Hamilton"
+  },
+  {
+    "_id": "62f6ace4b8ea605da193ed61",
+    "eyeColor": "brown",
+    "name": "Hernandez Vaughan"
+  },
+  {
+    "_id": "62f6ace4d62f5495b1b4177e",
+    "eyeColor": "green",
+    "name": "Laurie Hayden"
+  },
+  {
+    "_id": "62f6ace453f0a26edde01788",
+    "eyeColor": "green",
+    "name": "Gaines Foster"
+  },
+  {
+    "_id": "62f6ace4743bcd19189ecf79",
+    "eyeColor": "brown",
+    "name": "Kaufman Simpson"
+  },
+  {
+    "_id": "62f6ace4ca8cfd12141a9416",
+    "eyeColor": "green",
+    "name": "Hensley Hamilton"
+  },
+  {
+    "_id": "62f6ace4b8ea605da193ed61",
+    "eyeColor": "brown",
+    "name": "Hernandez Vaughan"
+  },
+  {
+    "_id": "62f6ace4d62f5495b1b4177e",
+    "eyeColor": "green",
+    "name": "Laurie Hayden"
+  },
+  {
+    "_id": "62f6ace453f0a26edde01788",
+    "eyeColor": "green",
+    "name": "Gaines Foster"
+  }
+]

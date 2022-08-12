@@ -72,5 +72,8 @@
     },
     "Pickle":{
         "price": 500
+    },
+    "Motorbike":{
+        "price": 50000
     }
 }

@@ -99,13 +99,16 @@ Route::get("/logout", function(){
 }); 
 
 
-Route::get("test", function(){
-    $con = new Content(base_path()."/resources/config/", "content");
-    $data = $con->get(); 
+Route::get("test", function(Request $request){
+    $con = new Content(base_path()."/resources/config/", "posts");
+    if($request->page == null){
+        $request->page = 0; 
+    }
+    $data = $con->paginate_page($con->get(), 10, $request->page, $request->page); 
 
-    return $con->paginate($data, 5); 
-    // return $con->get(); 
-
+    // return $data; 
+    return view("test.pagitation")->with(["data"=>$data]); 
+    // dd($_SERVER); 
 
 }); 
 
