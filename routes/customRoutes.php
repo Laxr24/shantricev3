@@ -51,7 +51,6 @@ Route::get('/file/{fileName}', function ($fileName = null ){
     $content = new Content();  
     $filePath =  $content->lookFor($fileName);
     $files = $content->scanDir($filePath);  
-
     return view("test.folder")->with("files", $files); 
 });
 
